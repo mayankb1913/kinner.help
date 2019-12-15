@@ -1,0 +1,338 @@
+﻿@model WebSite.Models.JobPostingModel
+
+@{
+    ViewBag.Title = "Job Posting";
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <br />
+    <style>
+        .hideElement {
+            display: none;
+        }
+
+        div.box {
+            width: auto;
+            height: auto;
+            padding: 20px;
+            padding-bottom: 5px;
+            border: groove;
+            border-color: lightgray;
+            border-width: 2px;
+            margin: 0;
+        }
+
+        .form-horizontal .control-label {
+            text-align: left;
+            font-weight: normal;
+        }
+
+        label {
+            font-weight: normal;
+        }
+
+        .form-control {
+            display: initial !important;
+        }
+
+        input.form-control, select.form-control, textarea.form-control {
+            max-width: 600px;
+        }
+    </style>
+    <script type="text/javascript"
+            src="/Scripts/jquery-2.1.3.min.js">
+    </script>
+
+    <script type="text/javascript">
+        checkAcceptance = function () {
+
+            if (document.getElementById("nameField").value == "" || document.getElementById("typeOfInstitutionField").value == "" ||
+                document.getElementById("registeredNumberField").value == "" || document.getElementById("jobCategoryField").value == "" ||
+                document.getElementById("jobLocationField").value == "" || document.getElementById("numOfJobPostingsField").value == "" ||
+                document.getElementById("mobileNumberField").value == "" || document.getElementById("emailIDField").value == "")
+                {
+                alert("Please fill all mandatory fields which are marked with *.");
+            }
+            else {
+                if ($('#acceptanceCheckField').is(':checked')) {
+                    $("#JobPostingForm").submit();
+                }
+                else {
+                    alert("Please read & accept the disclaimer");
+                }
+            }
+
+        }
+
+        $(document).ready(function () {
+            document.getElementById("jobCategoryOthersField").style.visibility = "hidden";
+            document.getElementById("minEducationOthersField").style.visibility = "hidden";
+            document.getElementById("typeOfInstitutionOthersField").style.visibility = "hidden";
+
+            $("#ClearButtonField").click(function () {
+                document.getElementById("nameField").value = "";
+                document.getElementById("numOfJobPostingsField").value = "";
+                document.getElementById("registeredNumberField").value = "";
+                document.getElementById("jobLocationField").value = "";
+                document.getElementById("mobileNumberField").value = "";
+                document.getElementById("emailIDField").value = "";
+                document.getElementById("minExpRequiredField").value = "";
+                document.getElementById("salaryOfferedField").value = "";
+                document.getElementById("jobDescriptionField").value = "";
+                document.getElementById("minEducationRequiredField").value = "";
+                document.getElementById("minEducationOthersField").value = "";
+
+                document.getElementById("companyOverviewField").value = "";
+                document.getElementById("typeOfInstitutionField").value = "";
+                document.getElementById("registeredAddressField").value = "";
+
+                document.getElementById("jobCategoryField").value = "";
+                document.getElementById("jobCategoryOthersField").value = "";
+                document.getElementById("typeOfInstitutionOthersField").value = "";
+                
+                document.getElementById("jobCategoryOthersField").style.visibility = "hidden";
+                document.getElementById("minEducationOthersField").style.visibility = "hidden";
+                document.getElementById("typeOfInstitutionOthersField").style.visibility = "hidden";
+
+            });
+
+            $("#typeOfInstitutionField").click(function () {
+                if ($("#typeOfInstitutionField").val() == "Others") {
+                    document.getElementById("typeOfInstitutionOthersField").style.visibility = "visible";
+                }
+                else {
+                    document.getElementById("typeOfInstitutionOthersField").style.visibility = "hidden";
+                }
+            });
+
+            $("#jobCategoryField").click(function () {
+                if ($("#jobCategoryField").val() == "Others") {
+                    document.getElementById("jobCategoryOthersField").style.visibility = "visible";
+                }
+                else {
+                    document.getElementById("jobCategoryOthersField").style.visibility = "hidden";
+                }
+            });
+
+            $("#minEducationRequiredField").click(function () {
+                if ($("#minEducationRequiredField").val() == "Others") {
+                    document.getElementById("minEducationOthersField").style.visibility = "visible";
+                }
+                else {
+                    document.getElementById("minEducationOthersField").style.visibility = "hidden";
+                }
+            });
+
+            $('.navbar-nav a').each(function () {
+                if ($(this).text() == $('#page-indicator').val()) {
+                    $(this).addClass('active');
+                }
+            });
+
+            $(".onHoverChangeColorBlue").hover(function () {
+                $(this).css("color", "#337ab7")
+            }, function () {
+                $(this).css("color", "#000000")
+            });
+        });
+    </script>
+    <input type="hidden" id="page-indicator" name="page-indicator" value="Job Posting" />
+
+
+    <br />
+
+    <form class="form-horizontal" method="post" action="OnJobPosting" name="JobPostingForm" id="JobPostingForm" enctype="multipart/form-data">
+        <div id="divNotice">
+            @Html.Partial("~/Views/Shared/_Notice.cshtml", Model.VmNotice)
+        </div>
+
+        <div class="box">
+            <div class="form-group">
+                <label class="col-xs-2">Company Name / Name*</label>
+                <div class="col-xs-10">
+                    <input type="text" class="form-control" id="nameField" name="nameField" placeholder="Company Name Or Your Name" required />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">Company Overview / Your Overview</label>
+                <div class="col-xs-10">
+                    <textarea rows="2" class="form-control" id="companyOverviewField" name="companyOverviewField" placeholder="Company Overview Or Your Overview"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">Type Of Institution*</label>
+                <div class="col-xs-10">
+                    <select size="1" name="typeOfInstitutionField" id="typeOfInstitutionField" class="form-control" required>
+                        <option></option>
+                        <option>Partnership</option>
+                        <option>Pvt. Ltd. Company</option>
+                        <option>Pvt. Company</option>
+                        <option>State Govt. Institution / Corporation</option>
+                        <option>Central Govt Institution / Corporation</option>
+                        <option>Others</option>
+                    </select>
+                    &nbsp;
+                    <input type="text" class="form-control" id="typeOfInstitutionOthersField" name="typeOfInstitutionOthersField" placeholder="Type Of Institution" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">Company Registered Address / Correspondence Address</label>
+                <div class="col-xs-10">
+                    <input type="text" class="form-control" id="registeredAddressField" name="registeredAddressField" placeholder="Company Registered Address Or Correspondence Address" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">Registered Number / Any Govt. Issued ID Proof Number*</label>
+                <div class="col-xs-10">
+                    <input type="text" class="form-control" id="registeredNumberField" name="registeredNumberField" placeholder="Registered Number Or Any Govt. Issued ID Proof Number" required />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">Job Category*</label>
+                <div class="col-xs-10">
+                    <select size="1" name="jobCategoryField" id="jobCategoryField" class="form-control" required>
+                        <option></option>
+                        <option>Teaching</option>
+                        <option>Cooking</option>
+                        <option>Singing</option>
+                        <option>Dancing</option>
+                        <option>Driving</option>
+                        <option>Computer Knowledge(MS-Word/Excel/Internet etc.)</option>
+                        <option>Household Business</option>
+                        <option>Education Classes</option>
+                        <option>Sewing</option>
+                        <option>Assembly</option>
+                        <option>Programming</option>
+                        <option>Marketing</option>
+                        <option>Modeling</option>
+                        <option>Fashion</option>
+                        <option>Clothes Designing</option>
+                        <option>Makeup</option>
+                        <option>Others</option>
+                    </select>
+                    &nbsp;
+                    <input type="text" class="form-control" id="jobCategoryOthersField" name="jobCategoryOthersField" placeholder="Job Category" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">Job Description</label>
+                <div class="col-xs-10">
+                    <textarea rows="1" class="form-control" id="jobDescriptionField" name="jobDescriptionField" placeholder="Your Job Description"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">Job Location*</label>
+                <div class="col-xs-10">
+                    <input type="text" class="form-control" id="jobLocationField" name="jobLocationField" placeholder="Your Job Location - Pincode" required />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">Number Of Job Postings*</label>
+                <div class="col-xs-10">
+                    <input type="number" class="form-control" id="numOfJobPostingsField" name="numOfJobPostingsField" placeholder="Number Of Vacancies" required />
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">Min Education Required</label>
+                <div class="col-xs-10">
+                    <select size="1" name="minEducationRequiredField" id="minEducationRequiredField" class="form-control">
+                        <option></option>
+                        <option>No Education</option>
+                        <option>1st to 4th Standard</option>
+                        <option>5th to 7th Standard</option>
+                        <option>8th to 10th Standard</option>
+                        <option>11th to 12th Standard</option>
+                        <option>Diploma</option>
+                        <option>Degree</option>
+                        <option>Masters</option>
+                        <option>Others</option>
+                    </select>
+                    &nbsp;
+                    <input type="text" class="form-control" id="minEducationOthersField" name="minEducationOthersField" placeholder="Minimum Education Required" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">Min Experience Required</label>
+                <div class="col-xs-10">
+                    <select size="1" name="minExpRequiredField" id="minExpRequiredField" class="form-control">
+                        <option></option>
+                        <option>0-1 Year</option>
+                        <option>1-2 Year</option>
+                        <option>3-5 Year</option>
+                        <option>6-10 Year</option>
+                        <option>Above 10 Year</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">Salary Offered</label>
+                <div class="col-xs-10">
+                    <input type="text" class="form-control" id="salaryOfferedField" name="salaryOfferedField" placeholder="Salary Offered" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">Mobile Number*</label>
+                <div class="col-xs-10">
+                    <input type="tel" maxlength="10" minlength="10" class="form-control" id="mobileNumberField" name="mobileNumberField" placeholder="Your Mobile Number" required />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-2">Email ID*</label>
+                <div class="col-xs-10">
+                    <input type="email" pattern="[a-zA-Z0-9._%+-]+&#64;[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" class="form-control" id="emailIDField" name="emailIDField" placeholder="Your Email ID" required />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2"><input type="checkbox" name="acceptanceCheckField" id="acceptanceCheckField" />*</label>
+                <div class="col-xs-10">
+                    <span style="display:block;width:600px;word-wrap:break-word;">
+                        <div class="box">
+                            <font size="1">
+                                <p>
+                                    The Privacy Policy is with respect to our use and protection of any personal information/data you provide to us through our website www.kinnerjobs.com.
+                                    By using the website, you expressly approve and consent to our collection, storage, use and disclosure of your personal information as described below in this Policy.
+                                </p>
+                                <p>
+                                    The information provided by you shall not be given for marketing purposes and other related activities without your prior consent.
+                                    The information provided by you shall be used by us to communicate to the employer in order to provide adequate job opportunities & skill developement program for the members of intersex and transgender community.
+                                </p>
+                                <p>
+                                    The job portal and the creators/maintainers of this job portal are not responsible for any type of liabilities which will happen between employers and employees.
+                                    Both the employees and employers are advised to do a proper background check about people or oraganistion they would want to be associated with.
+                                </p>
+                            </font>
+                        </div>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2"></label>
+                <div class="col-xs-10">
+                    <input type="button" onclick="checkAcceptance();" class="form-control btn-primary" id="submitField" value="Submit" style="max-width:150px" />&emsp;
+                    <input type="button" class="form-control btn-primary" id="ClearButtonField" value="Clear" style="max-width:150px" />
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

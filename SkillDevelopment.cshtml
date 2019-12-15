@@ -1,0 +1,325 @@
+﻿@model WebSite.Models.SkillModel
+
+@{
+    ViewBag.Title = "Skill Developement";
+}
+<br /><br />
+<style>
+    .form-horizontal .control-label {
+        text-align: left;
+        font-weight: normal;
+    }
+
+    label {
+        font-weight: normal;
+    }
+
+    .form-control {
+        display: initial !important;
+    }
+
+    input.form-control, select.form-control, textarea.form-control {
+        max-width: 600px;
+    }
+
+    div.box {
+        width: auto;
+        height: auto;
+        padding: 20px;
+        padding-bottom: 5px;
+        border: groove;
+        border-color: lightgray;
+        border-width: 2px;
+        margin: 0;
+    }
+</style>
+<html>
+<body>
+    <script type="text/javascript"
+            src="/Scripts/jquery-2.1.3.min.js">
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            document.getElementById("skillsToTeachOthersField").style.visibility = "hidden";
+            document.getElementById("trainingDurationOthersField").style.visibility = "hidden";
+
+            $("#ClearButtonField").click(function () {
+                document.getElementById("nameField").value = "";
+                document.getElementById("ageField").value = "";
+                document.getElementById("genderField").value = "";
+                document.getElementById("mobileNumberField").value = "";
+                document.getElementById("emailIDField").value = "";
+                document.getElementById("skillsToTeachField").value = "";
+                document.getElementById("skillsToTeachOthersField").value = "";
+                document.getElementById("commentsField").value = "";
+                document.getElementById("idProofNumberField").value = "";
+                document.getElementById("locationField").value = "";
+                document.getElementById("sutaibleDaysForTeach").value = "";
+                document.getElementById("sutaibleTimeForTeach").value = "";
+                document.getElementById("trainingDurationField").value = "";
+                document.getElementById("trainingChargesField").value = "";
+                document.getElementById("trainingDurationOthersField").value = "";
+                document.getElementById("skillsToTeachOthersField").style.visibility = "hidden";
+                document.getElementById("trainingDurationOthersField").style.visibility = "hidden";
+            });
+
+            if ("@Model.Comments" != "")
+                document.getElementById("commentsField").value = "@Model.Comments";
+
+            if ("@Model.Age" != "")
+            $('#ageField').val("@Model.Age").change();
+
+            if ("@Model.SkillsToTeach" != "") {
+                $('#skillsToTeachField').val("@Model.SkillsToTeach").change();
+            }
+
+            if ("@Model.TrainingDuration" != "") {
+                $('#trainingDurationField').val("@Model.TrainingDuration").change();
+            }
+
+            if ("@Model.SutaibleDaysForTeach" != "") {
+                $('#sutaibleDaysForTeach').val("@Model.SutaibleDaysForTeach").change();
+            }
+
+            if ("@Model.SutaibleTimeForTeach" != "") {
+                $('#sutaibleTimeForTeach').val("@Model.SutaibleTimeForTeach").change();
+            }
+
+            if ("@Model.TrainingCharges" != "") {
+                $('#trainingChargesField').val("@Model.TrainingCharges").change();
+            }
+
+            if ("@Model.SkillsToTeachOthers" != "")
+            {
+                document.getElementById("skillsToTeachOthersField").style.visibility = "visible";
+                document.getElementById("skillsToTeachOthersField").value = "@Model.SkillsToTeachOthers";
+            }
+
+            if ("@Model.TrainingDurationOthers" != "")
+            {
+                document.getElementById("trainingDurationOthersField").style.visibility = "visible";
+                document.getElementById("trainingDurationOthersField").value = "@Model.TrainingDurationOthers";
+            }
+
+            if ("@Model.Gender" != "") {
+                $('#genderField').val("@Model.Gender").change();
+            }
+
+            if ("@Model.IDProofNumber" != "")
+                document.getElementById("idProofNumberField").value = "@Model.IDProofNumber";
+
+            $("#trainingDurationField").click(function () {
+                if ($("#trainingDurationField").val() == "Others") {
+                    document.getElementById("trainingDurationOthersField").style.visibility = "visible";
+                }
+                else {
+                    document.getElementById("trainingDurationOthersField").style.visibility = "hidden";
+                }
+            });
+
+            $("#skillsToTeachField").click(function () {
+                if ($("#skillsToTeachField").val() == "Others") {
+                    document.getElementById("skillsToTeachOthersField").style.visibility = "visible";
+                }
+                else {
+                    document.getElementById("skillsToTeachOthersField").style.visibility = "hidden";
+                }
+            });
+
+            $('.navbar-nav a').each(function () {
+                if ($(this).text() == $('#page-indicator').val()) {
+                    $(this).addClass('active');
+                }
+            });
+
+            $(".onHoverChangeColorBlue").hover(function () {
+                $(this).css("color", "#337ab7")
+            }, function () {
+                $(this).css("color", "#000000")
+            });
+        });
+    </script>
+    <form class="form-horizontal" method="post" action="OnAddSkill" enctype="multipart/form-data">
+        <input type="hidden" id="page-indicator" name="page-indicator" value="Skill Development" />
+
+        <div id="divNotice">
+            @Html.Partial("~/Views/Shared/_Notice.cshtml", Model.VmNotice)
+        </div>
+
+        <div class="box" style="background-color:#f4f4f4">
+            <div class="form-group">
+                <span>
+                    This tab enable all of us to help transgender and intersex community.
+                    We all can assist to educate them to improve their skills & overall personality.
+                    <br />
+                    Please participate to educate them which will help them to get respectful life in our society.
+                </span>
+            </div>
+
+        </div>
+        <br />
+
+        <div class="box">
+            <div class="form-group">
+                <label class="col-xs-2">Name*</label>
+                <div class="col-xs-10">
+                    <input type="text" class="form-control" id="nameField" name="nameField" placeholder="Your Name" value="@Model.Name" required />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">Gender*</label>
+                <div class="col-xs-10">
+                    <select size="1" name="genderField" id="genderField" class="form-control" required value="@Model.Gender">
+                        <option></option>
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Trans</option>
+                        <option>Intersex</option>
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-xs-2">Age*</label>
+                <div class="col-xs-10">
+                    <select size="1" name="ageField" id="ageField" class="form-control" required>
+                        @for (int i = 18; i <= 60; i++)
+                {
+                    <option>@i</option>
+        }
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-xs-2">Any Govt. Issued ID Proof Number*</label>
+                <div class="col-xs-10">
+                    <input type="text" class="form-control" id="idProofNumberField" name="idProofNumberField" placeholder="Any Government Issued ID Proof Number" value="@Model.IDProofNumber" required />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">Mobile Number*</label>
+                <div class="col-xs-10">
+                    <input type="tel" maxlength="10" minlength="10" class="form-control" id="mobileNumberField" name="mobileNumberField" placeholder="Your Mobile Number" value="@Model.MobileNumber" required />
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-xs-2">Email ID*</label>
+                <div class="col-xs-10">
+                    <input type="email" pattern="[a-zA-Z0-9._%+-]+&#64;[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" class="form-control" id="emailIDField" name="emailIDField" placeholder="Your Email ID" value="@Model.EmailID" required />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">Training Charges*</label>
+                <div class="col-xs-10">
+                    <select size="1" name="trainingChargesField" id="trainingChargesField" class="form-control" required>
+                        <option></option>
+                        <option>Applicable</option>
+                        <option>Not Applicable</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">Skills You Want To Teach*</label>
+                <div class="col-xs-10">
+                    <select size="1" name="skillsToTeachField" id="skillsToTeachField" class="form-control" required>
+                        <option></option>
+                        <option>Teaching</option>
+                        <option>Cooking</option>
+                        <option>Singing</option>
+                        <option>Dancing</option>
+                        <option>Driving</option>
+                        <option>Computer Knowledge(MS-Word/Excel/Internet etc.)</option>
+                        <option>Household Business</option>
+                        <option>Education Classes</option>
+                        <option>Sewing</option>
+                        <option>Assembly</option>
+                        <option>Programming</option>
+                        <option>Marketing</option>
+                        <option>Modeling</option>
+                        <option>Fashion</option>
+                        <option>Clothes Designing</option>
+                        <option>Makeup</option>
+                        <option>Others</option>
+                    </select>
+                    &nbsp;
+                    <input type="text" class="form-control" id="skillsToTeachOthersField" name="skillsToTeachOthersField" placeholder="Skills you are interested to teach" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">Training Duration*</label>
+                <div class="col-xs-10">
+                    <select size="1" name="trainingDurationField" id="trainingDurationField" class="form-control" required>
+                        <option></option>
+                        <option>1 Month</option>
+                        <option>2 Month</option>
+                        <option>3 Month</option>
+                        <option>Others</option>
+                    </select>
+                    &nbsp;
+                    <input type="text" class="form-control" id="trainingDurationOthersField" name="trainingDurationOthersField" placeholder="Training Duration" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">Location*</label>
+                <div class="col-xs-10">
+                    <input type="text" class="form-control" id="locationField" name="locationField" placeholder="The place where the training will take place." value="@Model.Location" required />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">Availability For Specific Days*</label>
+                <div class="col-xs-10">
+                    <select size="2" name="sutaibleDaysForTeach" id="sutaibleDaysForTeach" class="form-control" multiple required>
+                        <option></option>
+                        <option>Monday</option>
+                        <option>Tuesday</option>
+                        <option>Wednesday</option>
+                        <option>Thursday</option>
+                        <option>Friday</option>
+                        <option>Saturday</option>
+                        <option>Sunday</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">Sutaible Timings*</label>
+                <div class="col-xs-10">
+                    <input type="text" class="form-control" id="sutaibleTimeForTeach" name="sutaibleTimeForTeach" placeholder="Your available timing for teaching" value="@Model.SutaibleTimeForTeach" required />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">Comments</label>
+                <div class="col-xs-10">
+                    <textarea rows="2" class="form-control" id="commentsField" name="commentsField" placeholder="Your Comments"></textarea>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-xs-2"></label>
+                <div class="col-xs-10">
+                    <input type="submit" class="form-control btn-primary" id="CreateButtonField" value="Create" style="max-width:150px" />&emsp;
+                    <input type="button" class="form-control btn-primary" id="ClearButtonField" value="Clear" style="max-width:150px" />
+                </div>
+            </div>
+        </div>
+
+    </form>
+</body>
+</html>

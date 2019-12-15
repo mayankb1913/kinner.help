@@ -1,0 +1,469 @@
+﻿@model WebSite.Models.ProfileModel
+
+@{
+    ViewBag.Title = "Create Profile";
+}
+<br /><br />
+            <style>
+
+                .form-horizontal .control-label {
+                    text-align: left;
+                    font-weight: normal;
+                }
+
+                label {
+                    font-weight: normal;
+                }
+                .form-control {
+                    display: initial !important;
+                }
+
+                input.form-control, select.form-control, textarea.form-control {
+                    max-width: 600px;
+                }
+                div.box {
+                    width: auto;
+                    height: auto;
+                    padding: 20px;
+                    padding-bottom: 5px;
+                    border: groove;
+                    border-color: lightgray;
+                    border-width: 2px;
+                    margin: 0;
+                }
+
+            </style>
+<html>
+<body>
+    <script type="text/javascript"
+            src="/Scripts/jquery-2.1.3.min.js">
+    </script>
+
+    <script type="text/javascript">
+        checkAcceptance = function () {
+
+            if (document.getElementById("nameField").value == "" || document.getElementById("languagesKnownField").value == "" ||
+                document.getElementById("ageField").value == "" || document.getElementById("genderField").value == "" ||
+                document.getElementById("uploadIdProofField").value == "" || document.getElementById("mobileNumberField").value == "" ||
+                document.getElementById("idProofNumberField").value == "" || document.getElementById("emailIDField").value == "" ||
+                document.getElementById("jobLocationField").value == "")
+            {
+                alert("Please fill all mandatory fields which are marked with *.");
+            }
+            else
+            {
+                if ($('#acceptanceCheckField').is(':checked')) {
+                    $("#CreateProfileForm").submit();
+                }
+                else {
+                    alert("Please read & accept the disclaimer");
+                }
+            }
+
+        }
+
+        $(document).ready(function () {
+
+            document.getElementById("skillsOthersField").style.visibility = "hidden";
+            document.getElementById("educationOthersField").style.visibility = "hidden";
+
+
+            $("#ClearButtonField").click(function () {
+                document.getElementById("nameField").value = "";
+                document.getElementById("nickNameField").value = "";
+                document.getElementById("languagesKnownField").value = "";
+                document.getElementById("ageField").value = "";
+                document.getElementById("genderField").value = "";
+                document.getElementById("uploadIdProofField").value = "";
+                document.getElementById("mobileNumberField").value = "";
+                document.getElementById("emailIDField").value = "";
+                document.getElementById("educationField").value = "";
+                document.getElementById("educationOthersField").value = "";
+                document.getElementById("skillsField").value = "";
+                document.getElementById("skillsOthersField").value = "";
+                document.getElementById("uploadResumeField").value = "";
+                document.getElementById("commentsField").value = "";
+                document.getElementById("idProofNumberField").value = "";
+                document.getElementById("jobLocationField").value = "";
+
+                document.getElementById("skillsOthersField").style.visibility = "hidden";
+                document.getElementById("educationOthersField").style.visibility = "hidden";
+
+
+            });
+
+            if ("@Model.Comments" != "")
+                document.getElementById("commentsField").value = "@Model.Comments";
+
+            if ("@Model.LanguagesKnown" != "")
+                document.getElementById("languagesKnownField").value = "@Model.LanguagesKnown";
+
+            if ("@Model.NickName" != "")
+                document.getElementById("nickNameField").value = "@Model.NickName";
+
+            if ("@Model.Age" != "")
+            $('#ageField').val("@Model.Age").change();
+
+            if ("@Model.JobLocation" != "")
+            $('#jobLocationField').val("@Model.JobLocation").change();
+
+            if ("@Model.Education" != "") {
+                $('#educationField').val("@Model.Education").change();
+            }
+
+            if ("@Model.CrossDressing" != "") {
+                $('#dressingField').val("@Model.CrossDressing").change();
+            }
+
+            if ("@Model.EducationOthers" != "")
+            {
+                document.getElementById("educationOthersField").style.visibility = "visible";
+                document.getElementById("educationOthersField").value = "@Model.EducationOthers";
+            }
+
+            if ("@Model.Skills" != "") {
+                $('#skillsField').val("@Model.Skills").change();
+            }
+
+            if ("@Model.SkillsOthers" != "")
+            {
+                document.getElementById("skillsOthersField").style.visibility = "visible";
+                document.getElementById("skillsOthersField").value = "@Model.SkillsOthers";
+            }
+
+            @*if (("@Model.Education" != "") && ("@Model.Education" != "10") && ("@Model.Education" != "12")
+                && ("@Model.Education" != "Diploma") && ("@Model.Education" != "Graduation") && ("@Model.Education" != "Post Graduation")) {
+
+                document.getElementById("educationOthersField").style.visibility = "visible";
+                document.getElementById("educationOthersField").value = "@Model.Education";
+
+                $('#educationField').val("Others").change();
+                alert("1");
+            }
+            else {
+                $('#educationField').val("@Model.Education").change();
+                alert("2");
+            }
+
+            if (("@Model.Skills" != "") && ("@Model.Skills" != "Teaching") && ("@Model.Skills" != "Cooking")
+                && ("@Model.Skills" != "Singing") && ("@Model.Skills" != "Dancing") && ("@Model.Skills" != "Driving")) {
+
+                document.getElementById("skillsOthersField").style.visibility = "visible";
+                document.getElementById("skillsOthersField").value = "@Model.Skills";
+
+                $('#skillsField').val("Others").change();
+            }
+            else {
+                $('#skillsField').val("@Model.Skills").change();
+            }*@
+
+            if ("@Model.Gender" != "") {
+                $('#genderField').val("@Model.Gender").change();
+            }
+
+
+            var idProofFileInput = document.getElementById('uploadIdProofField');
+            idProofFileInput.addEventListener('change', function (e) {
+
+                var file = idProofFileInput.files[0];
+                if (file.name != "") {
+                    var fileExtension = "";
+
+                    if (file.name.lastIndexOf(".") > 0) {
+                        fileExtension = file.name.substring(file.name.lastIndexOf(".") + 1, file.name.length).toLowerCase();
+                    }
+
+                    if (!((fileExtension == "gif") || (fileExtension == "bmp") || (fileExtension == "png") || (fileExtension == "jpg") || (fileExtension == "jpeg"))) {
+                        alert("Given file format is not supported. Supported file formats are *.bmp, *.jpg, *.jpeg, *.png");
+                        $("#uploadIdProofField").val('');
+
+                    }
+
+                    if (this.files[0].size == 0) {
+                        alert("Invalid File(Empty File)");
+                        $("#uploadIdProofField").val('');
+                    }
+
+                    //var maxSize = parseInt($(this).attr('max-size'), 10),
+                    //size = this.files[0].size;
+
+                    //if (size > maxSize) {
+                    //    alert("Invalid File(Size should be less than File)");
+                    //    $("#uploadIdProofField").val('');
+                    //}
+
+                }
+
+            });
+
+
+            var resumeFileInput = document.getElementById('uploadResumeField');
+            resumeFileInput.addEventListener('change', function (e) {
+
+                var resumeFile = resumeFileInput.files[0];
+                if (resumeFile.name != "") {
+                    var fileExtension = "";
+
+                    if (resumeFile.name.lastIndexOf(".") > 0) {
+                        fileExtension = resumeFile.name.substring(resumeFile.name.lastIndexOf(".") + 1, resumeFile.name.length).toLowerCase();
+                    }
+
+                    if (!((fileExtension == "txt") || (fileExtension == "doc") || (fileExtension == "docx") || (fileExtension == "pdf")
+                        || (fileExtension == "rtf"))) {
+                        alert("Given file format is not supported. Only word & pdf files are supoorted.");
+                        $("#uploadResumeField").val('');
+                    }
+
+                    if (this.files[0].size == 0) {
+                        alert("Invalid File(Empty File)");
+                        $("#uploadResumeField").val('');
+                    }
+
+
+                    //var maxSize = parseInt($(this).attr('max-size'), 10),
+                    //size = this.files[0].size;
+
+                    //if (size > maxSize) {
+                    //    alert("Invalid File(Size should be less than File)");
+                    //    $("#uploadResumeField").val('');
+                    //}
+
+                }
+
+            });
+
+
+
+            $("#skillsField").click(function () {
+                if ($("#skillsField").val() == "Others") {
+                    document.getElementById("skillsOthersField").style.visibility = "visible";
+                }
+                else {
+                    document.getElementById("skillsOthersField").style.visibility = "hidden";
+                }
+            });
+
+            $("#educationField").click(function () {
+                if ($("#educationField").val() == "Others") {
+                    document.getElementById("educationOthersField").style.visibility = "visible";
+                }
+                else {
+                    document.getElementById("educationOthersField").style.visibility = "hidden";
+                }
+            });
+
+            $('.navbar-nav a').each(function () {
+                if ($(this).text() == $('#page-indicator').val()) {
+                    $(this).addClass('active');
+                }
+            });
+
+            $(".onHoverChangeColorBlue").hover(function () {
+                $(this).css("color", "#337ab7")
+            }, function () {
+                $(this).css("color", "#000000")
+            });
+        });
+    </script>
+    <form class="form-horizontal" method="post" action="OnCreate" name="CreateProfileForm" id="CreateProfileForm" enctype="multipart/form-data">
+        <input type="hidden" id="page-indicator" name="page-indicator" value="Create Profile" />
+
+        <div id="divNotice">
+            @Html.Partial("~/Views/Shared/_Notice.cshtml", Model.VmNotice)
+        </div>
+
+        <div class="box">
+            <div class="form-group">
+                <label class="col-xs-2">Name*</label>
+                <div class="col-xs-10">
+                    <input type="text" class="form-control" id="nameField" name="nameField" placeholder="Your Name" value="@Model.Name" required />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">Nick Name</label>
+                <div class="col-xs-10">
+                    <input type="text" class="form-control" id="nickNameField" name="nickNameField" placeholder="Any Other Name" value="@Model.NickName" />
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-xs-2">Gender*</label>
+                <div class="col-xs-10">
+                    <select size="1" name="genderField" id="genderField" class="form-control" required value="@Model.Gender">
+                        <option></option>
+                        <option>Trans</option>
+                        <option>Intersex</option>
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-xs-2">Age*</label>
+                <div class="col-xs-10">
+                    <select size="1" name="ageField" id="ageField" class="form-control" required>
+                        @for (int i = 18; i <= 60; i++)
+                {
+                    <option>@i</option>
+        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">Languages Known*</label>
+                <div class="col-xs-10">
+                    <input type="text" class="form-control" id="languagesKnownField" name="languagesKnownField" placeholder="Example - English Hindi" value="@Model.LanguagesKnown" required />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">Any Govt. Issued ID Proof Number*</label>
+                <div class="col-xs-10">
+                    <input type="text" class="form-control" id="idProofNumberField" name="idProofNumberField" placeholder="Any Government Issued ID Proof Number" value="@Model.IDProofNumber" required />
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-xs-2">Upload ID Proof*</label>
+                <div class="col-xs-10">
+                    <input type="file" max-size="516" class="form-control" id="uploadIdProofField" name="uploadIdProofField" accept="image/*" required />
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-xs-2">Mobile Number*</label>
+                <div class="col-xs-10">
+                    <input type="tel" maxlength="10" minlength="10" class="form-control" id="mobileNumberField" name="mobileNumberField" placeholder="Your Mobile Number" value="@Model.MobileNumber" required />
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-xs-2">Email ID*</label>
+                <div class="col-xs-10">
+                    <input type="email" pattern="[a-zA-Z0-9._%+-]+&#64;[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" class="form-control" id="emailIDField" name="emailIDField" placeholder="Your Email ID" value="@Model.EmailID" required />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">Preferred Job Location*</label>
+                <div class="col-xs-10">
+                    <input type="text" class="form-control" id="jobLocationField" name="jobLocationField" placeholder="Preferred Job Location(Pune, Mumbai, Banglore)" value="@Model.JobLocation" required />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-2">Education</label>
+                <div class="col-xs-10">
+                    <select size="1" name="educationField" id="educationField" class="form-control">
+                        <option></option>
+                        <option>No Education</option>
+                        <option>1st to 4th Standard</option>
+                        <option>5th to 7th Standard</option>
+                        <option>8th to 10th Standard</option>
+                        <option>11th to 12th Standard</option>
+                        <option>Diploma</option>
+                        <option>Degree</option>
+                        <option>Masters</option>
+                        <option>Others</option>
+                    </select>
+                    &nbsp;
+                    <input type="text" class="form-control" id="educationOthersField" name="educationOthersField" placeholder="Education" />
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-xs-2">Skills</label>
+                <div class="col-xs-10">
+                    <select size="1" name="skillsField" id="skillsField" class="form-control">
+                        <option></option>
+                        <option>Teaching</option>
+                        <option>Cooking</option>
+                        <option>Singing</option>
+                        <option>Dancing</option>
+                        <option>Driving</option>
+                        <option>Computer Knowledge(MS-Word/Excel/Internet etc.)</option>
+                        <option>Household Business</option>
+                        <option>Education Classes</option>
+                        <option>Sewing</option>
+                        <option>Assembly</option>
+                        <option>Programming</option>
+                        <option>Marketing</option>
+                        <option>Modeling</option>
+                        <option>Fashion</option>
+                        <option>Clothes Designing</option>
+                        <option>Makeup</option>
+                        <option>Others</option>
+                    </select>
+                    &nbsp;
+                    <input type="text" class="form-control" id="skillsOthersField" name="skillsOthersField" placeholder="Skills" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">Would you be cross-dressing to office?</label>
+                <div class="col-xs-10">
+                    <select size="1" name="dressingField" id="dressingField" class="form-control" value="@Model.CrossDressing">
+                        <option></option>
+                        <option>Regularly</option>
+                        <option>Sometimes</option>
+                        <option>No</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">Upload Resume</label>
+                <div class="col-xs-10">
+                    <input type="file" max-size="2048" class="form-control" id="uploadResumeField" name="uploadResumeField" accept="application/pdf,application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2">Comments</label>
+                <div class="col-xs-10">
+                    <textarea rows="2" class="form-control" id="commentsField" name="commentsField" placeholder="Your Comments"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2"><input type="checkbox" name="acceptanceCheckField" id="acceptanceCheckField" />*</label>
+                <div class="col-xs-10">
+                    <span style="display:block;width:600px;word-wrap:break-word;">
+                        <div class="box">
+                            <font size="1">
+                                <p>
+                                    The Privacy Policy is with respect to our use and protection of any personal information/data you provide to us through our website www.kinnerjobs.com.
+                                    By using the website, you expressly approve and consent to our collection, storage, use and disclosure of your personal information as described below in this Policy.
+                                </p>
+                                <p>
+                                    The information provided by you shall not be given for marketing purposes and other related activities without your prior consent.
+                                    The information provided by you shall be used by us to communicate to the employer in order to provide adequate job opportunities & skill developement program for the members of intersex and transgender community.
+                                </p>
+                                <p>
+                                    The job portal and the creators/maintainers of this job portal are not responsible for any type of liabilities which will happen between employers and employees.
+                                    Both the employees and employers are advised to do a proper background check about people or oraganistion they would want to be associated with.
+                                </p>
+                            </font>
+                        </div>
+                    </span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-xs-2"></label>
+                <div class="col-xs-10">
+                    <input type="button" onclick="checkAcceptance();" class="form-control btn-primary" id="CreateButtonField" value="Create" style="max-width:150px" />&emsp;
+                    <input type="button" class="form-control btn-primary" id="ClearButtonField" value="Clear" style="max-width:150px" />
+                </div>
+            </div>
+        </div>
+
+    </form>
+</body>
+</html>
